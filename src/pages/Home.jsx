@@ -1,14 +1,22 @@
-import { useMemo } from "react";
-import Hyperspeed from "../component/Hyperspeed";
+import React from "react";
 import TextType from '../component/TextType';
 import ShinyText from '../component/ShinyText';
+import Folder from '../component/Folder';
+import BounceCards from '../component/BounceCards';
 
-// 1. Import your local video asset here (use forward slashes '/')
 import subwayVideo from '../assets/coverr-moving-subway-3744-1080p.mp4';
 
 export default function Home() {
+  const sampleImages = [
+    "https://images.unsplash.com/photo-1518173946687-a4c8a383392e?q=80&w=500&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1536240478700-b869070f9279?q=80&w=500&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?q=80&w=500&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=500&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=500&auto=format&fit=crop"
+  ];
+
   return (
-    <div style={{ width: "100%", backgroundColor: "#000000", }}>
+    <div style={{ width: "100%", backgroundColor: "#000000", overflowX: "hidden" }}>
       
       {/* ────────────────────────────────────────────────────────
           SECTION 1: HERO SECTION
@@ -19,10 +27,11 @@ export default function Home() {
           width: "100%",
           height: "100vh",
           minHeight: "600px",
-         
+          zIndex: 10,
+          borderBottom: "1px solid rgba(255, 255, 255, 0.2)",
+          boxShadow: "0px 30px 100px 0px rgba(255, 255, 255, 0.3)",
         }}
       >
-        {/* Background Video */}
         <video
           autoPlay
           loop
@@ -36,38 +45,26 @@ export default function Home() {
             height: "100%",
             objectFit: "cover",
             zIndex: 1,
+            animation: "fadeIn 1.2s ease-out"
           }}
         >
-          {/* 2. Use the imported variable inside JSX curly braces */}
           <source src={subwayVideo} type="video/mp4" />
-          Your browser does not support the video tag.
         </video>
 
-        {/* Dark Overlay */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            backgroundColor: "rgba(0, 0, 0, 0.55)",
-            zIndex: 2,
-          }}
-        />
+        <div style={{ position: "absolute", inset: 0, backgroundColor: "rgba(0, 0, 0, 0.55)", zIndex: 2 }} />
 
-        {/* Centered Hero Text Overlay */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0, 
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: 10,
-            pointerEvents: "none", 
-          }}
-        >
-          <div className="hero-text" style={{ maxWidth: '800px', padding: '20px', textAlign: 'center' }}>
+        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", zIndex: 10, pointerEvents: "none" }}>
+          <div className="hero-text animate-fade-in-up" style={{ maxWidth: '850px', padding: '20px', textAlign: 'center' }}>
             
-            <div className="shine-text" style={{ fontSize: 'clamp(3rem, 8vw, 5rem)', margin: '5px', lineHeight: 1.1 }}>
+            <div 
+              style={{ 
+                fontSize: 'clamp(3rem, 8vw, 5.5rem)', 
+                margin: '5px', 
+                lineHeight: 1.1, 
+                fontFamily: '"Dancing Script", cursive',
+                fontWeight: 700,
+              }}
+            >
               <ShinyText
                 text="Unisoft Art"
                 speed={2}
@@ -76,26 +73,33 @@ export default function Home() {
                 shineColor="#333"
                 spread={120}
                 direction="left"
-                yoyo={false}
-                pauseOnHover={false}
-                disabled={false}
               />
             </div>
 
-            <div className="type-text" style={{ color: 'white', fontSize: 'clamp(1.2rem, 3vw, 2rem)', marginTop: '15px' }}>
+            <div 
+              style={{ 
+                fontSize: 'clamp(1.1rem, 2.8vw, 1.8rem)', 
+                marginTop: '15px',
+                fontFamily: '"Playwrite ID", cursive',
+                background: "linear-gradient(135deg, #ffffff 70%, #333333 20%, #cccccc 10%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                display: "inline-block"
+              }}
+            >
               <TextType 
                 text={[
-                  "Where Things Move", 
-                  "Build amazing experiences!", 
-                  "Happy coding!"
+                  "Cinematic Videography & Motion Art",
+                  "Capturing Visual Stories That Move",
+                  "Commercial & Creative Video Production",
+                  "Bringing Concepts to Life Frame by Frame",
+                  "High-End Visual Editing & Color Grading"
                 ]}
-                typingSpeed={75}
-                pauseDuration={1500}
+                typingSpeed={65}
+                pauseDuration={1800}
                 showCursor
                 cursorCharacter="_"
-                deletingSpeed={50}
-                variableSpeedEnabled={false}
-                cursorBlinkDuration={0.5}
+                deletingSpeed={40}
               />
             </div>
 
@@ -103,25 +107,31 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 2: CONTENT SECTION */}
+      {/* ────────────────────────────────────────────────────────
+          SECTION 2: BOUNCE CARDS GALLERY
+      ──────────────────────────────────────────────────────── */}
       <section
         style={{
           position: "relative",
           zIndex: 20,
           width: "100%",
-          padding: "120px 20px",
+          padding: "100px 20px",
           background: "linear-gradient(180deg, #000000 0%, #0a0a12 100%)",
-          borderTop: "1px solid rgba(255, 255, 255, 0.08)",
+          borderBottom: "1px solid rgba(255, 255, 255, 0.2)",
+          boxShadow: "0px 30px 100px 0px rgba(255, 255, 255, 0.3)",
+          minHeight: '100vh',
           color: "#ffffff",
+          boxSizing: "border-box"
         }}
       >
         <div style={{ maxWidth: "1100px", margin: "0 auto", textAlign: "center" }}>
           <h2
+            className="animate-fade-in-up"
             style={{
-              fontSize: "clamp(1.8rem, 3.8vw, 2.8rem)",
-              fontFamily: "'Orbitron', sans-serif",
+              fontSize: "clamp(2.2rem, 5vw, 3.8rem)",
+              fontFamily: '"Dancing Script", cursive',
               marginBottom: "18px",
-              background: "linear-gradient(135deg, #ffffff 0%, #03b3c3 100%)",
+              background: "linear-gradient(135deg, #ffffff 30%, #03b3c3 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
             }}
@@ -129,46 +139,93 @@ export default function Home() {
             Crafting Digital Experiences
           </h2>
           <p
+            className="animate-fade-in-up"
             style={{
               color: "rgba(255, 255, 255, 0.7)",
-              fontSize: "1.05rem",
+              fontSize: "clamp(1rem, 2vw, 1.2rem)",
+              fontFamily: '"Playwrite ID", cursive',
               lineHeight: 1.7,
               maxWidth: "680px",
-              margin: "0 auto 40px auto",
+              margin: "0 auto 50px auto",
+              animationDelay: "0.2s"
             }}
           >
-            Combining interactive 3D elements, smooth animations, and high-performance WebGL
-            to create memorable web platforms.
+            Combining high-definition video production, smooth motion graphics, and creative direction.
           </p>
 
-          <div
+          <div className="animate-fade-in-up" style={{ width: "100%", display: "flex", justifyContent: "center", padding: "20px 0", animationDelay: "0.4s" }}>
+            <BounceCards
+              className="custom-bounce-cards"
+              images={sampleImages}
+              containerWidth={600}
+              containerHeight={350}
+              animationDelay={0.5}
+              animationStagger={0.08}
+              easeType="elastic.out(1, 0.8)"
+              transformStyles={[
+                "rotate(-12deg) translate(-170px, 0px)",
+                "rotate(-6deg) translate(-85px, 10px)",
+                "rotate(0deg) translate(0px, 0px)",
+                "rotate(6deg) translate(85px, 10px)",
+                "rotate(12deg) translate(170px, 0px)"
+              ]}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* ────────────────────────────────────────────────────────
+          SECTION 3: PORTFOLIO FOLDER VAULT
+      ──────────────────────────────────────────────────────── */}
+      <section
+        style={{
+          position: "relative",
+          zIndex: 30,
+          width: "100%",
+          padding: "100px 20px",
+          background: "linear-gradient(180deg, #0a0a12 0%, #000000 100%)",
+          borderBottom: "1px solid rgba(255, 255, 255, 0.2)",
+          boxShadow: "0px 15px 50px 0px rgba(255, 255, 255, 0.15)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "#ffffff",
+          boxSizing: "border-box"
+        }}
+      >
+        <div style={{ width: "100%", maxWidth: "1100px", margin: "0 auto", textAlign: "center" }}>
+          <h2
+            className="animate-fade-in-up"
             style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-              gap: "24px",
+              fontSize: "clamp(2.2rem, 5vw, 3.8rem)",
+              fontFamily: '"Dancing Script", cursive',
+              marginBottom: "16px",
+              background: "linear-gradient(135deg, #ffffff 0%, #03b3c3 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
             }}
           >
-            {["High Performance", "Interactive 3D", "Modern Design"].map((title, i) => (
-              <div
-                key={i}
-                style={{
-                  padding: "30px",
-                  background: "rgba(255, 255, 255, 0.03)",
-                  backdropFilter: "blur(12px)",
-                  WebkitBackdropFilter: "blur(12px)",
-                  borderRadius: "16px",
-                  border: "1px solid rgba(255, 255, 255, 0.08)",
-                  textAlign: "left",
-                }}
-              >
-                <h3 style={{ fontSize: "1.2rem", color: "#03b3c3", marginBottom: "10px" }}>
-                  {title}
-                </h3>
-                <p style={{ color: "rgba(255, 255, 255, 0.6)", fontSize: "0.92rem", lineHeight: 1.5 }}>
-                  Engineered with React and Three.js for seamless frame rates and intuitive user feedback.
-                </p>
-              </div>
-            ))}
+            Project Vault & Assets
+          </h2>
+
+          <p
+            className="animate-fade-in-up"
+            style={{
+              color: "rgba(255, 255, 255, 0.7)",
+              fontSize: "clamp(1rem, 2vw, 1.2rem)",
+              fontFamily: '"Playwrite ID", cursive',
+              lineHeight: 1.7,
+              maxWidth: "620px",
+              margin: "0 auto 30px auto",
+              animationDelay: "0.2s"
+            }}
+          >
+            Explore our interactive media archive containing raw video cuts, motion graphic presets, and full campaign breakdowns.
+          </p>
+
+          <div className="animate-float" style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%", height: "400px" }}>
+            <Folder size={3.0} color="#03b3c3" className="custom-folder" />
           </div>
         </div>
       </section>
